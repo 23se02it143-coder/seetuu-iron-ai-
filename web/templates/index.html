@@ -1,0 +1,475 @@
+{%- extends "base.html" -%}
+{%- from "_macros.html" import icon -%}
+
+{% block head %}
+<script type="application/ld+json">{{ ld_json | safe }}</script>
+{% endblock %}
+
+{% block main %}
+<!-- Hero -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  {% if hero_image %}<img class="hero__photo" src="/static/img/{{ hero_image }}?v={{ version }}"{% if hero_image == 'hero.jpg' %} srcset="/static/img/hero-m.jpg?v={{ version }} 1200w, /static/img/hero.jpg?v={{ version }} 2200w" sizes="100vw"{% endif %} alt="" decoding="async" fetchpriority="high">{% endif %}
+  <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true" data-hue="343" data-speed="0.8" data-intensity="0.75"></canvas>
+  <div class="hero__bolt-fallback" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <p class="hero__kicker hero__seq seq-1" data-scramble>The neural fitness agent</p>
+    <h1 class="hero__title hero__seq seq-2" id="hero-title">UNWAVERING <em>FOCUS.</em></h1>
+    <p class="hero__lead hero__seq seq-3">Beyond data, we build character. Training guidance that starts with a safety check, corrects your technique as you go, and adapts to how well you recovered. Pure power, refined by intelligence.</p>
+
+    <div class="hero__cta hero__seq seq-4">
+      <form class="inline-form" data-waitlist data-source="hero" novalidate>
+        <label class="sr-only" for="hero-email">Email address</label>
+        <input class="input" id="hero-email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required>
+        <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn--primary" type="submit">Join the waitlist</button>
+      </form>
+      <p class="field-error" data-waitlist-error role="alert"></p>
+      <div data-waitlist-result></div>
+      <p class="hero__alt">or <a class="link" href="#assessment" data-track="cta_click">take the 60-second readiness assessment</a></p>
+    </div>
+
+    <ul class="hero__status hero__seq seq-5" aria-label="Live status">
+      <li><span class="dot" id="status-dot"></span><span id="status-api">Checking service</span></li>
+      <li id="status-latency-wrap" hidden><span>API response</span> <b id="status-latency">--</b></li>
+      <li><span>Local time</span> <b id="current-time">--:--</b></li>
+      <li id="status-count-wrap" hidden><b id="status-count">0</b> <span>on the waitlist</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- Proof strip: facts about the product, counted up on scroll -->
+<section class="proof" aria-label="IRON-AI in numbers">
+  <div class="container proof__grid">
+    <div><b data-count="33">33</b><span>body landmarks tracked live by your camera</span></div>
+    <div><b data-count="4">4</b><span>lifts coached: squat, deadlift, push-up, pull-up</span></div>
+    <div><b data-count="0">0</b><span>bytes of your video ever uploaded</span></div>
+    <div><b data-count="0" data-prefix="&#8377;">&#8377;0</b><span>to start. Pro from &#8377;499 a month</span></div>
+  </div>
+</section>
+
+<!-- Mission -->
+<section class="section mission" id="mission" aria-labelledby="mission-title">
+  <div class="container mission__grid">
+    <div class="mission__copy">
+      <p class="eyebrow"><span>01</span>Why IRON-AI</p>
+      <h2 class="mission__statement" id="mission-title">Designing the <em>biology of peak</em> performance.</h2>
+      <p class="lead">We don't just count reps; we look at intent. Feedback that catches the small compensations traditional training misses is what moves you past a plateau.</p>
+      <div class="mission__links"><a class="btn btn--primary" href="#coach">{{ icon('camera') }}Try the form coach</a><a class="link" href="#assessment">Take the 60-second assessment</a></div>
+    </div>
+    <figure class="mission__art" aria-hidden="true">
+      <img class="mission__img" src="/static/img/scene-kettlebell.jpg?v={{ version }}" alt="" loading="lazy" decoding="async">
+      <span class="hud hud--a"><i></i>Torso lean <b>38&deg;</b></span>
+      <span class="hud hud--b"><i></i>Knee tracking <b>OK</b></span>
+      <span class="hud hud--c">Rep 8 <b>92</b></span>
+      <span class="reticle reticle--a"></span><span class="reticle reticle--b"></span>
+    </figure>
+  </div>
+  <div class="container">
+    <dl class="facts facts--bento">
+      <div><dt>{{ icon('shield-check') }}Safety checks come first</dt><dd>Chest pain, numbness or crisis language never reach a chatbot answer. Fixed responses point you to real help.</dd></div>
+      <div><dt>{{ icon('lock-key') }}Your answers stay yours</dt><dd>Assessment answers are stored only if you choose to save them, and you can export or delete your data any time.</dd></div>
+      <div><dt>{{ icon('scales') }}Guidance, not diagnosis</dt><dd>{{ s.app_name }} supports your training. It never replaces a doctor or physiotherapist.</dd></div>
+      <div><dt>{{ icon('receipt') }}Cancel from your account</dt><dd>No calls, no forms. Change plans or cancel in two clicks and keep access until the period ends.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- Safety -->
+<section class="section" id="safety" aria-labelledby="safety-title">
+  <div class="container">
+    <div data-ghost="SAFE" class="section__head">
+      <p class="eyebrow"><span>02</span>Safety first</p>
+      <h2 class="h2" id="safety-title">Safety comes first, and it runs in four steps.</h2>
+      <p class="lead">Every program starts by finding out what your body can take today, then keeps checking as you train.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step step--fill">
+        <div class="step__top">{{ icon('pulse', 'step__icon') }}<span class="step__num" aria-hidden="true">1</span></div>
+        <div><h3>Assessment</h3><p>A screen of your baseline mobility, sleep and injury history before any load is prescribed.</p></div>
+      </li>
+      <li class="step">
+        <div class="step__top">{{ icon('eye', 'step__icon') }}<span class="step__num" aria-hidden="true">2</span></div>
+        <div><h3>Form check</h3><p>Joint-by-joint technique review so alignment problems show up before they hurt.</p></div>
+      </li>
+      <li class="step step--fill">
+        <div class="step__top">{{ icon('broadcast', 'step__icon') }}<span class="step__num" aria-hidden="true">3</span></div>
+        <div><h3>Feedback</h3><p>Short cues that correct alignment in the moment, while the set is still fresh.</p></div>
+      </li>
+      <li class="step">
+        <div class="step__top">{{ icon('heartbeat', 'step__icon') }}<span class="step__num" aria-hidden="true">4</span></div>
+        <div><h3>Recovery</h3><p>Strain tracking and recovery protocols that scale your next session up or down.</p></div>
+      </li>
+    </ol>
+
+    <div class="assistant">
+      <div>
+        <h3 class="assistant__title">A training assistant awake at 3 a.m.</h3>
+        <p class="lead">Ask about a warm-up, a sore joint or what a lift should feel like. Try it, it answers here.</p>
+        <ul class="assistant__points">
+          <li>{{ icon('check-circle') }}<span>Form and programming questions answered instantly, any hour.</span></li>
+          <li>{{ icon('check-circle') }}<span>Red-flag symptoms are sent to a clinician, never coached through.</span></li>
+          <li>{{ icon('check-circle') }}<span>Plan prices come straight from our pricing, so answers never drift.</span></li>
+        </ul>
+      </div>
+
+      <section class="chat" aria-label="IRON CORE chat">
+        <div class="chat__head">
+          <div class="chat__avatar">{{ icon('robot') }}<span class="dot" aria-hidden="true"></span></div>
+          <div><div class="chat__name">IRON CORE</div><div class="chat__mode" id="chat-mode">Training assistant</div></div>
+        </div>
+        <div class="chat__log" id="chat-log" role="log" aria-live="polite" aria-label="Conversation">
+          <div class="msg msg--bot">Hi, I'm IRON CORE. Ask me about form, warm-ups, recovery or our plans. I can't diagnose injuries, and I'll tell you when something needs a clinician.</div>
+        </div>
+        <div class="chat__chips" id="chat-chips" aria-label="Suggested questions"></div>
+        <form class="chat__form" id="chat-form" autocomplete="off">
+          <label class="sr-only" for="chat-input">Message</label>
+          <input class="input" id="chat-input" name="message" maxlength="600" placeholder="Ask IRON CORE..." required>
+          <button class="chat__send" type="submit" aria-label="Send message">{{ icon('paper-plane-right') }}</button>
+        </form>
+        <p class="chat__foot">General training guidance only. Not medical advice.</p>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- Camera form coach -->
+<section class="section coach" id="coach" aria-labelledby="coach-title">
+  <div class="container">
+    <div data-ghost="FORM" class="section__head">
+      <p class="eyebrow"><span>03</span>Camera form coach</p>
+      <h2 class="h2" id="coach-title">Your camera is the coach.</h2>
+      <p class="lead">Turn it on, stand side-on, and a ghost skeleton shows exactly where your joints should be, fitted to your own body. Corrections appear as you move. Everything runs on your device, and your video is never uploaded.</p>
+    </div>
+    <div class="coach__layout">
+      <div class="coach__stage spot" id="coach-stage" data-state="ok">
+        <canvas id="coach-canvas" width="1280" height="720" aria-label="Live camera view with skeleton overlay"></canvas>
+        <video id="coach-video" playsinline muted></video>
+        <div class="coach__hud" id="coach-hud" hidden>
+          <div class="coach__top"><span class="coach__live"><i class="dot"></i>Live <b id="coach-fps">-- fps</b></span><span class="coach__timer" id="coach-timer"></span></div>
+          <div class="coach__stats"><div><small>Reps</small><b id="coach-reps">0</b></div><div><small>Form</small><b id="coach-score" data-level="good">--</b></div></div>
+          <div class="coach__gauge" aria-hidden="true"><i id="coach-gauge-fill"></i><em id="coach-gauge-goal" hidden></em></div>
+          <div class="coach__calib" hidden aria-hidden="true"><i id="coach-cal"></i></div>
+          <p class="coach__cue" id="coach-cue" role="status" aria-live="polite" data-severity="ok">Stand tall and still for two seconds so I can learn your body.</p>
+        </div>
+        <div class="coach__overlay" id="coach-overlay" data-kind="intro">
+          <div data-panel="intro" class="coach__intro">
+            <h3 class="h3">Ready when you are.</h3>
+            <ol class="coach__steps">
+              <li><b>1</b><span>Prop your phone or laptop 2 to 3 metres away, at hip height.</span></li>
+              <li><b>2</b><span>Stand side-on so the camera sees your whole body, head to toe.</span></li>
+              <li><b>3</b><span>Stand tall for two seconds. It learns your proportions.</span></li>
+              <li><b>4</b><span>Do your reps and follow the dotted ghost.</span></li>
+            </ol>
+            <div class="row row--center"><button type="button" class="btn btn--primary" data-coach-start>{{ icon('camera') }}Start camera</button><button type="button" class="btn btn--ghost" data-coach-demo>{{ icon('play') }}Watch a demo</button></div>
+            <p class="form-note">Your camera feed stays on this device. Nothing is recorded or uploaded.</p>
+          </div>
+          <div data-panel="loading" hidden><span class="spinner spinner--lg" aria-hidden="true"></span><p id="coach-load-text">Loading</p></div>
+          <div data-panel="error" hidden><p id="coach-error-text"></p><button type="button" class="btn btn--primary btn--sm" id="coach-retry">Try again</button></div>
+        </div>
+      </div>
+      <aside class="coach__side">
+        <div class="tabs" role="tablist" id="coach-tabs" aria-label="Exercise">
+          <button type="button" role="tab" data-ex="squat" aria-selected="true">Squat<span class="coach__lock" hidden>{{ icon('lock-key') }}</span></button>
+          <button type="button" role="tab" data-ex="deadlift" aria-selected="false">Deadlift<span class="coach__lock" hidden>{{ icon('lock-key') }}</span></button>
+          <button type="button" role="tab" data-ex="pushup" aria-selected="false">Push-up<span class="coach__lock" hidden>{{ icon('lock-key') }}</span></button>
+          <button type="button" role="tab" data-ex="pullup" aria-selected="false">Pull-up<span class="coach__lock" hidden>{{ icon('lock-key') }}</span></button>
+        </div>
+        <p class="muted" id="coach-intro-text"></p>
+        <div class="row">
+          <button type="button" class="btn btn--primary" id="coach-start" data-coach-start>{{ icon('camera') }}Start camera</button>
+          <button type="button" class="btn btn--ghost" id="coach-stop" hidden>Stop</button>
+          <button type="button" class="btn btn--ghost" data-coach-demo>{{ icon('play') }}Watch a demo</button>
+          <button type="button" class="btn btn--ghost btn--sm" id="coach-flip" hidden>Flip camera</button>
+        </div>
+        <div class="coach__toggles">
+          <label class="check"><input type="checkbox" id="coach-ghost" checked><span>Show the ghost coach (ideal form)</span></label>
+          <label class="check"><input type="checkbox" id="coach-voice" disabled><span>Voice coaching <em class="pro-chip">Pro</em></span></label>
+          <p class="form-note" id="coach-voice-note">Spoken cues while you train are part of Pro.</p>
+        </div>
+        <ul class="coach__tips">
+          <li>{{ icon('check') }}<span>Good light and a plain background help a lot.</span></li>
+          <li>{{ icon('check') }}<span>Wear fitted clothes so your joints are visible.</span></li>
+          <li>{{ icon('check') }}<span>Camera at hip height, side-on, feet in frame.</span></li>
+        </ul>
+        <div class="coach__gate" id="coach-gate"><b>Free:</b> squat, 3-minute sessions. <b>Pro:</b> deadlift, push-up, pull-up, unlimited time, voice cues and saved history. <a class="link" href="#pricing">See Pro</a></div>
+        <div class="panel coach__summary" id="coach-summary" hidden></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Form lab -->
+<section class="section section--deep lab" id="formlab" aria-labelledby="lab-title">
+  <div class="container lab__grid">
+    <div class="lab__panel">
+      <p class="eyebrow"><span>04</span>Form lab</p>
+      <h2 class="h2" id="lab-title">Learn the ideal squat, no camera needed.</h2>
+      <p class="lead">Drag the depth slider and pick a fault to see how the joint angles and coaching cues change as a rep goes wrong. The camera coach above uses the same maths on you.</p>
+      <div class="lab__controls">
+        <div class="field"><label for="lab-depth">Depth</label><input class="range" id="lab-depth" type="range" min="0" max="100" value="0"></div>
+        <fieldset class="lab__faults"><legend class="label">Rep quality</legend>
+          <div class="pain-wrap">
+            <label class="choice choice--pill"><input type="radio" name="fault" value="clean" checked><span class="choice__box"><strong>Clean rep</strong></span></label>
+            <label class="choice choice--pill"><input type="radio" name="fault" value="lean"><span class="choice__box"><strong>Leaning forward</strong></span></label>
+            <label class="choice choice--pill"><input type="radio" name="fault" value="heels"><span class="choice__box"><strong>Heels rising</strong></span></label>
+          </div>
+        </fieldset>
+        <div><button type="button" class="btn btn--ghost btn--sm" id="lab-play">{{ icon('play') }}Play a rep</button></div>
+      </div>
+      <dl class="lab__stats">
+        <div><dt>Knee angle</dt><dd id="lab-knee">180&deg;</dd></div>
+        <div><dt>Hip angle</dt><dd id="lab-hip">--</dd></div>
+        <div><dt>Torso lean</dt><dd id="lab-lean">--</dd></div>
+        <div><dt>Depth</dt><dd id="lab-depth-state">Standing</dd></div>
+      </dl>
+    </div>
+    <div class="lab__stage" id="lab-stage" data-state="ok">
+      <svg id="lab-svg" viewBox="60 -40 300 412" role="img" aria-label="Side view of a lifter squatting, with the knee angle marked">
+        <defs><pattern id="lab-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" class="lab-gridline"/></pattern></defs>
+        <rect x="0" y="0" width="440" height="400" fill="url(#lab-grid)"/>
+        <line class="lab-ground" x1="20" y1="350" x2="420" y2="350"/>
+        <line class="lab-plumb" id="lab-plumb"/>
+        <path class="lab-mid" id="lab-mid"/>
+        <polyline class="lab-bone" id="lab-foot" fill="none"/>
+        <line class="lab-bone" id="lab-shin"/><line class="lab-bone" id="lab-thigh"/>
+        <line class="lab-bone" id="lab-torso"/><line class="lab-bone lab-bone--thin" id="lab-neck"/>
+        <circle class="lab-head" id="lab-head" r="15"/>
+        <path class="lab-arc" id="lab-arc"/><text class="lab-label" id="lab-arc-label" text-anchor="start">180&deg;</text>
+        <circle class="lab-plate" id="lab-plate" r="22"/><circle class="lab-joint" id="lab-bar" r="5"/>
+        <circle class="lab-joint" id="lab-j-ankle" r="7"/><circle class="lab-joint" id="lab-j-knee" r="8"/><circle class="lab-joint" id="lab-j-hip" r="7"/>
+      </svg>
+      <div class="lab__cue"><span class="lab__score" id="lab-score" aria-label="Form score">100</span><p id="lab-cue-text">Standing tall. Brace, take a breath and start the descent.</p></div>
+    </div>
+    <p class="lab__note">A simulated lifter, so you can explore the idea. Try the real thing with the camera coach above.</p>
+    <p class="sr-only" id="lab-sr" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- Exercise library -->
+<section class="section section--deep library" id="library" aria-labelledby="library-title">
+  <div class="container">
+    <div class="section__head section__head--center" data-ghost="MOVES">
+      <p class="eyebrow"><span>05</span>Exercise library</p>
+      <h2 class="h2" id="library-title">Every muscle, done right.</h2>
+      <p class="lead">Correct-form cues for a full week's worth of training, grouped by muscle. The four lifts the camera coach watches live are marked, everything else is guidance to lift by.</p>
+    </div>
+    <div class="library__grid" id="library-grid" aria-live="polite">
+      <div class="skeleton library__skeleton"></div><div class="skeleton library__skeleton"></div><div class="skeleton library__skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Assessment -->
+<section class="section" id="assessment" aria-labelledby="assessment-title">
+  <div class="container">
+    <div data-ghost="PROOF" class="section__head section__head--center">
+      <p class="eyebrow"><span>06</span>Readiness</p>
+      <h2 class="h2" id="assessment-title">Find your starting point in 60 seconds.</h2>
+      <p class="lead">Six questions. You get a readiness score, a recommended program and the plan that fits it. Nothing is stored unless you choose to save it.</p>
+    </div>
+    <div class="assess" id="assessment-root" aria-live="polite">
+      <noscript><p>The assessment needs JavaScript. Enable it, or <a class="link" href="#contact">contact us</a> for help.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<!-- Diet planner -->
+<section class="section section--deep diet" id="diet" aria-labelledby="diet-title">
+  <div class="container">
+    <div data-ghost="FUEL" class="section__head section__head--center">
+      <p class="eyebrow"><span>07</span>Nutrition</p>
+      <h2 class="h2" id="diet-title">Eat for the body you're building.</h2>
+      <p class="lead">Pick your goal and get calories, macros and a full day of Indian meals to match. Bulk, cut, recomp or maintain, veg, egg or non-veg.</p>
+    </div>
+    <div class="diet__grid">
+      <form class="diet__form" id="diet-form" novalidate>
+        <fieldset class="diet__goals"><legend class="label">Your goal</legend>
+          <div class="goalgrid">
+            <label class="goal"><input type="radio" name="goal" value="bulk" checked><span class="goal__box"><b>Bulk</b><small>Build muscle. Eat above maintenance.</small></span></label>
+            <label class="goal"><input type="radio" name="goal" value="cut"><span class="goal__box"><b>Cut</b><small>Lose fat, keep muscle.</small></span></label>
+            <label class="goal"><input type="radio" name="goal" value="recomp"><span class="goal__box"><b>Recomp</b><small>Slowly swap fat for muscle.</small></span></label>
+            <label class="goal"><input type="radio" name="goal" value="maintain"><span class="goal__box"><b>Maintain</b><small>Hold your weight steady.</small></span></label>
+          </div>
+        </fieldset>
+        <div class="diet__row">
+          <div class="field"><span class="label">Sex</span>
+            <div class="segmented" role="radiogroup" aria-label="Sex"><label><input type="radio" name="sex" value="male" checked><span>Male</span></label><label><input type="radio" name="sex" value="female"><span>Female</span></label></div></div>
+          <div class="field"><label for="d-age">Age</label><input class="input" id="d-age" name="age" type="number" inputmode="numeric" min="18" max="75" value="24" required><span class="field-error" data-error-for="age"></span></div>
+        </div>
+        <div class="diet__row">
+          <div class="field"><label for="d-height">Height (cm)</label><input class="input" id="d-height" name="height_cm" type="number" inputmode="decimal" min="120" max="230" value="172" required><span class="field-error" data-error-for="height_cm"></span></div>
+          <div class="field"><label for="d-weight">Weight (kg)</label><input class="input" id="d-weight" name="weight_kg" type="number" inputmode="decimal" min="35" max="250" step="0.5" value="68" required><span class="field-error" data-error-for="weight_kg"></span></div>
+        </div>
+        <div class="field"><span class="label">What do you eat?</span>
+          <div class="segmented" role="radiogroup" aria-label="Diet preference"><label><input type="radio" name="preference" value="veg" checked><span>Vegetarian</span></label><label><input type="radio" name="preference" value="egg"><span>Eggetarian</span></label><label><input type="radio" name="preference" value="nonveg"><span>Non-veg</span></label></div></div>
+        <div class="diet__row">
+          <div class="field"><label for="d-activity">Activity level</label>
+            <select class="select" id="d-activity" name="activity"><option value="sedentary">Little exercise, desk job</option><option value="light">Light: 1 to 3 workouts a week</option><option value="moderate" selected>Moderate: 3 to 5 workouts a week</option><option value="very_active">Very active: 6 to 7 hard sessions</option></select></div>
+          <div class="field"><label for="d-meals">Meals a day</label>
+            <select class="select" id="d-meals" name="meals"><option>3</option><option>4</option><option selected>5</option><option>6</option></select></div>
+        </div>
+        <div class="field" id="d-pace-field"><span class="label">How fast?</span>
+          <div class="segmented" role="radiogroup" aria-label="Pace"><label><input type="radio" name="pace" value="gentle"><span>Gentle</span></label><label><input type="radio" name="pace" value="standard" checked><span>Standard</span></label><label><input type="radio" name="pace" value="fast"><span>Fast</span></label></div></div>
+        <div class="form-error" data-form-error hidden></div>
+        <button class="btn btn--primary btn--block" type="submit">Build my plan</button>
+        <p class="form-note">For healthy adults 18 and over. Estimates only, not medical advice.</p>
+      </form>
+      <div class="diet__result" id="diet-result" aria-live="polite">
+        <div class="diet__empty"><span class="diet__plate" aria-hidden="true">{{ icon('barbell') }}</span><p class="h3">Your plan appears here.</p><p class="muted">Calories, protein, carbs and fats, plus what to eat and when, tuned to your goal.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programs -->
+<section class="section programs" id="programs" aria-labelledby="programs-title">
+  <div class="container">
+    <div data-ghost="TRAIN" class="section__head section__head--center">
+      <p class="eyebrow"><span>08</span>Training</p>
+      <h2 class="h2" id="programs-title">Engineered evolution, in four programs.</h2>
+      <p class="lead">Choose the one that matches where you are today. The assessment will point you to it.</p>
+    </div>
+    <div class="programs__feature" id="programs-feature"><div class="skeleton"></div><div class="skeleton"></div></div>
+    <div class="prow-list" id="programs-more"></div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<section class="ticker" id="ticker" aria-label="Our philosophy" data-ticker>
+  <div class="ticker__track" data-ticker-track>
+    {% for _ in range(2) %}
+    <div class="ticker__item" {% if loop.index == 2 %}aria-hidden="true"{% endif %}>
+      <span>Pure strength</span>{{ icon('sparkle-fill') }}<span>Beyond data</span>
+      <svg class="wave" viewBox="0 0 100 40" fill="none" aria-hidden="true"><path d="M0 20C20 20 30 5 50 5C70 5 80 35 100 35" stroke="#4d061c" stroke-width="4"/></svg>
+      <span>Evolution</span><em>together.</em>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div data-ghost="POWER" class="section__head section__head--center">
+      <p class="eyebrow"><span>09</span>Plans</p>
+      <h2 class="h2" id="pricing-title">Simple plans. Cancel any time.</h2>
+      <p class="lead">Start free. Upgrade when you want adaptive programming, unlimited assistant access and deeper analytics.</p>
+      <div class="pricing__toggle" role="group" aria-label="Billing period">
+        <button type="button" data-interval="month" aria-pressed="true">Monthly</button>
+        <button type="button" data-interval="year" aria-pressed="false">Yearly<small id="save-badge"></small></button>
+      </div>
+    </div>
+    <div class="plans" id="plans"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    <p class="pricing__foot" id="pricing-foot"></p>
+  </div>
+</section>
+
+<!-- Stories -->
+<section class="stories" id="stories" aria-labelledby="stories-title">
+  <div class="container stories__head section" >
+    <p class="eyebrow"><span>10</span>Athletes</p>
+    <h2 class="h2" id="stories-title">What athletes tell us.</h2>
+    <button type="button" class="pause-btn" id="marquee-toggle" aria-pressed="false">{{ icon('pause') }}<span>Pause scrolling</span></button>
+  </div>
+  <div class="marquee" id="marquee" tabindex="0" aria-label="Customer quotes"><div class="marquee__track" id="marquee-track"></div></div>
+  <p class="container sample-note" id="sample-note" hidden>These are placeholder quotes shown until real customer stories are added.</p>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <p class="eyebrow"><span>11</span>Answers</p>
+      <h2 class="h2" id="faq-title">Questions, answered.</h2>
+    </div>
+    <div class="faq">
+      {% for f in faqs %}
+      <details>
+        <summary>{{ f.question }}{{ icon('plus') }}</summary>
+        <p class="faq__a">{{ f.answer }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Waitlist -->
+<section class="section cta" id="waitlist" aria-labelledby="waitlist-title">
+  <div class="container--narrow">
+    <p class="eyebrow"><span>12</span>Early access</p>
+    <h2 class="h2" id="waitlist-title">Get in early.<br>Bring your training partners.</h2>
+    <p class="lead center">Join the waitlist for launch access. Every friend who joins with your link moves you up ten places.</p>
+    <form class="cta__form" data-waitlist data-source="footer" novalidate>
+      <div class="inline-form">
+        <label class="sr-only" for="cta-email">Email address</label>
+        <input class="input" id="cta-email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required>
+        <button class="btn btn--primary" type="submit">Join the waitlist</button>
+      </div>
+      <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <details class="cta__extra">
+        <summary>Tell us a bit more (optional)</summary>
+        <div class="field"><label for="cta-name">First name</label><input class="input" id="cta-name" name="name" autocomplete="given-name" maxlength="80"></div>
+        <div class="field"><label for="cta-interest">I am a</label>
+          <select class="select" id="cta-interest" name="interest">
+            <option value="athlete">Athlete or lifter</option><option value="coach">Coach or trainer</option>
+            <option value="gym">Gym or team owner</option><option value="other">Something else</option>
+          </select></div>
+        <div class="field"><label for="cta-goal">What do you want from your training?</label><input class="input" id="cta-goal" name="goal" maxlength="160" placeholder="For example: rebuild after a shoulder injury"></div>
+      </details>
+    </form>
+    <p class="field-error mt-l" data-waitlist-error role="alert"></p>
+    <div data-waitlist-result></div>
+    <p class="counter" id="cta-counter" hidden></p>
+    <p class="form-note mt-l">One email when it opens, plus updates you can turn off at any time. No spam, no selling your address.</p>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div>
+      <p class="eyebrow"><span>13</span>Contact</p>
+      <h2 class="h2" id="contact-title">Talk to a human.</h2>
+      <p class="lead">Running a gym, coaching a team or writing about training? Tell us what you need and we'll reply within two working days.</p>
+      <ul class="contact__topics">
+        <li><b>Gyms and teams</b><span>Group licences and a coach workspace.</span></li>
+        <li><b>Coaches</b><span>Use IRON-AI alongside your programming.</span></li>
+        <li><b>Press and partners</b><span>Interviews, data and integrations.</span></li>
+        <li><b>Support</b><span>Account, billing or a technical problem.</span></li>
+      </ul>
+    </div>
+    <form class="contact__form" id="contact-form" novalidate>
+      <div class="contact__row">
+        <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" maxlength="80" required><span class="field-error" data-error-for="name"></span></div>
+        <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required><span class="field-error" data-error-for="email"></span></div>
+      </div>
+      <div class="contact__row">
+        <div class="field"><label for="c-company">Company or team <span class="muted">(optional)</span></label><input class="input" id="c-company" name="company" autocomplete="organization" maxlength="120"></div>
+        <div class="field"><label for="c-topic">Topic</label>
+          <select class="select" id="c-topic" name="topic">
+            <option value="gym-or-team">Gym or team</option><option value="coach">Coach</option><option value="press">Press or partnership</option>
+            <option value="support">Support</option><option value="other" selected>Something else</option>
+          </select></div>
+      </div>
+      <div class="field"><label for="c-message">How can we help?</label><textarea class="textarea" id="c-message" name="message" maxlength="3000" required></textarea><span class="field-error" data-error-for="message"></span></div>
+      <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="form-error" data-form-error hidden></div>
+      <button class="btn btn--primary" type="submit">Send message</button>
+      <p class="form-note">We use your details only to reply to this message. See our <a class="link" href="/privacy">privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
+
+<a class="fab" id="fab" href="#coach" hidden>{{ icon('camera') }}<span>Try the form coach</span></a>
+
+<dialog class="dialog dialog--wide" id="program-dialog" aria-labelledby="pdlg-title">
+  <div class="dialog__body" id="program-dialog-body"></div>
+</dialog>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/pages/home.js?v={{ version }}"></script>
+<script type="module" src="/static/js/mobile.js?v={{ version }}"></script>
+{% endblock %}

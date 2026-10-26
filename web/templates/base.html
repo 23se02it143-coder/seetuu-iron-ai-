@@ -1,0 +1,160 @@
+{%- from "_macros.html" import icon -%}
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{% if title %}{{ title }} | {{ s.app_name }}{% else %}{{ s.app_name }} | AI training that checks your form and adapts to your recovery{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}IRON-AI is a training-safety assistant: a 60-second readiness assessment, form guidance, and recovery that adapts to how you feel. Join the waitlist.{% endblock %}">
+  <meta name="theme-color" content="#212121">
+  <link rel="canonical" href="{{ s.base_url }}{{ request.url.path if request.url.path != '/' else '/' }}">
+  <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ s.app_name }}">
+  <meta property="og:title" content="{{ self.title() | striptags | trim }}">
+  <meta property="og:description" content="{{ self.description() | trim }}">
+  <meta property="og:image" content="{{ s.base_url }}/static/img/og.png">
+  <meta property="og:url" content="{{ s.base_url }}{{ request.url.path }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/static/fonts/playfair-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/site.css?v={{ version }}">
+  <link rel="stylesheet" href="/static/css/mobile.css?v={{ version }}" media="(max-width: 640px)">
+  {% block head %}{% endblock %}
+  <script src="/static/js/boot.js?v={{ version }}"></script>
+</head>
+<body data-page="{{ page_id }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  {% set home = '' if page_id == 'home' else '/' %}
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <header class="header {% block header_class %}{% endblock %}" id="header">
+    <div class="container header__inner">
+      <a href="{{ home or '/' }}#top" class="logo" aria-label="{{ s.app_name }} home"><b>IRON</b>-AI.</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="{{ home }}#mission">Why IRON-AI</a>
+        <a href="{{ home }}#safety">Safety</a>
+        <a href="{{ home }}#assessment">Assessment</a>
+        <a href="{{ home }}#programs">Programs</a>
+        <a href="{{ home }}#pricing">Pricing</a>
+        <a href="{{ home }}#faq">FAQ</a>
+      </nav>
+      <div class="header__actions" data-session>
+        <button type="button" class="btn btn--ghost btn--sm" data-open-auth="login">Sign in</button>
+        <a class="btn btn--primary btn--sm header-cta" href="{{ home }}#waitlist">Join the waitlist</a>
+        <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">{{ icon('list') }}</button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile" hidden>
+    <a href="{{ home }}#mission">Why IRON-AI</a>
+    <a href="{{ home }}#safety">Safety</a>
+    <a href="{{ home }}#assessment">Assessment</a>
+    <a href="{{ home }}#programs">Programs</a>
+    <a href="{{ home }}#pricing">Pricing</a>
+    <a href="{{ home }}#faq">FAQ</a>
+    <a href="{{ home }}#waitlist">Join the waitlist</a>
+    <a href="{{ home }}#contact">Contact</a>
+    <a href="/account" data-mobile-account>Account</a>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    {% block main %}{% endblock %}
+  </main>
+
+  {% block footer %}
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="logo"><b>IRON</b>-AI.</a>
+          <p>Training guidance that checks your readiness first, then adapts to how you recover.</p>
+          {% if s.company_name %}<p class="footer__owner">Operated by {{ s.company_name }}{% if s.support_email %} &middot; <a href="mailto:{{ s.support_email }}">{{ s.support_email }}</a>{% endif %}</p>{% endif %}
+        </div>
+        <div>
+          <h3>Product</h3>
+          <ul>
+            <li><a href="/#assessment">Readiness assessment</a></li>
+            <li><a href="/#programs">Programs</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Company</h3>
+          <ul>
+            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#waitlist">Waitlist</a></li>
+            {% if s.support_email %}<li><a href="mailto:{{ s.support_email }}">{{ s.support_email }}</a></li>{% endif %}
+          </ul>
+        </div>
+        <div>
+          <h3>Legal and social</h3>
+          <ul>
+            <li><a href="/terms">Terms of service</a></li>
+            <li><a href="/privacy">Privacy policy</a></li>
+            {% for label, url in s.social_links.items() %}<li><a href="{{ url }}" rel="noopener noreferrer" target="_blank">{{ label }}</a></li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="footer__mark" aria-hidden="true">IRON-AI.</div>
+      <div class="footer__legal">
+        <p>&copy; {{ year }} {{ s.company_name }}. {{ s.app_name }} provides general training guidance and is not a medical service. If something hurts or worries you, stop and see a doctor or physiotherapist.</p>
+        <p>v{{ version }}</p>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <dialog class="dialog" id="auth-dialog" aria-labelledby="auth-title">
+    <div class="dialog__body">
+      <button type="button" class="dialog__close" data-close aria-label="Close">{{ icon('x') }}</button>
+      <h2 id="auth-title">Sign in</h2>
+      <p class="muted" id="auth-sub">Access your plan, invoices and saved assessments.</p>
+      <div class="tabs" role="tablist" id="auth-tabs" aria-label="Account">
+        <button type="button" role="tab" data-tab="login" aria-selected="true">Sign in</button>
+        <button type="button" role="tab" data-tab="register" aria-selected="false">Create account</button>
+      </div>
+
+      <form id="form-login" data-auth-form="login" novalidate>
+        <div class="field"><label for="login-email">Email</label><input class="input" id="login-email" name="email" type="email" autocomplete="email" required><span class="field-error" data-error-for="email"></span></div>
+        <div class="field"><label for="login-password">Password</label>
+          <div class="pw"><input class="input" id="login-password" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" data-toggle-pw aria-label="Show password">{{ icon('eye') }}</button></div>
+          <span class="field-error" data-error-for="password"></span></div>
+        <div class="form-error" data-form-error hidden></div>
+        <button class="btn btn--primary btn--block" type="submit">Sign in</button>
+        <button class="text-btn" type="button" data-tab="forgot">Forgot your password?</button>
+      </form>
+
+      <form id="form-register" data-auth-form="register" novalidate hidden>
+        <div class="field"><label for="reg-name">Name</label><input class="input" id="reg-name" name="name" autocomplete="name" required><span class="field-error" data-error-for="name"></span></div>
+        <div class="field"><label for="reg-email">Email</label><input class="input" id="reg-email" name="email" type="email" autocomplete="email" required><span class="field-error" data-error-for="email"></span></div>
+        <div class="field"><label for="reg-password">Password</label>
+          <div class="pw"><input class="input" id="reg-password" name="password" type="password" autocomplete="new-password" required aria-describedby="reg-pw-hint">
+            <button type="button" data-toggle-pw aria-label="Show password">{{ icon('eye') }}</button></div>
+          <div class="pwmeter" data-level="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <span class="hint" id="reg-pw-hint">At least 10 characters. Avoid common passwords and your email name.</span>
+          <span class="field-error" data-error-for="password"></span></div>
+        <label class="check"><input type="checkbox" name="terms" required><span>I agree to the <a class="link" href="/terms" target="_blank">Terms</a> and <a class="link" href="/privacy" target="_blank">Privacy policy</a>.</span></label>
+        <span class="field-error" data-error-for="terms"></span>
+        <div class="form-error" data-form-error hidden></div>
+        <button class="btn btn--primary btn--block" type="submit">Create account</button>
+      </form>
+
+      <form id="form-forgot" data-auth-form="forgot" novalidate hidden>
+        <p class="muted">Enter your email and we will send a link to choose a new password.</p>
+        <div class="field"><label for="forgot-email">Email</label><input class="input" id="forgot-email" name="email" type="email" autocomplete="email" required><span class="field-error" data-error-for="email"></span></div>
+        <div class="form-error" data-form-error hidden></div>
+        <button class="btn btn--primary btn--block" type="submit">Send reset link</button>
+        <button class="text-btn" type="button" data-tab="login">Back to sign in</button>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* Account, checkout and admin surfaces. Loaded in addition to site.css. */
+
+.app { padding: calc(var(--header-h) + 3rem) 0 6rem; min-height: 100svh; }
+.app__head { margin-bottom: 2.5rem; }
+.app__head h1 { font: 500 clamp(2rem, 4.5vw, 3.2rem)/1.1 var(--serif); letter-spacing: -0.02em; }
+.app__head p { color: var(--ash); margin-top: 0.5rem; }
+.app__grid { display: grid; gap: 1.5rem; max-width: 900px; }
+
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: clamp(1.4rem, 3vw, 2.2rem); }
+.panel h2 { font: 500 1.5rem/1.3 var(--serif); margin-bottom: 0.3rem; }
+.panel > p.sub { color: var(--ash); font-size: 0.95rem; margin-bottom: 1.4rem; }
+.panel form { display: grid; gap: 1rem; margin-top: 1.2rem; max-width: 440px; }
+.panel--danger { border-color: rgba(255, 122, 122, 0.3); }
+.row { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+.row--between { justify-content: space-between; }
+
+.plan-card { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.2rem; align-items: center; padding: 1.3rem 1.5rem; border-radius: 18px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); margin-bottom: 1.2rem; }
+.plan-card__name { font: 500 1.7rem/1.1 var(--serif); }
+.plan-card__meta { color: var(--ash); font-size: 0.925rem; margin-top: 0.25rem; }
+.status { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: rgba(111, 207, 151, 0.14); color: var(--ok); }
+.status--warn { background: rgba(242, 193, 78, 0.14); color: var(--warn); }
+.status--bad { background: rgba(255, 122, 122, 0.14); color: var(--danger); }
+.status--muted { background: rgba(255, 255, 255, 0.08); color: var(--ash); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
+.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 560px; }
+.table th { text-align: left; font-weight: 600; color: var(--ash); padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); white-space: nowrap; }
+.table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table tr:last-child td { border-bottom: 0; }
+.table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.empty { padding: 2rem; text-align: center; color: var(--ash); }
+
+/* checkout */
+.checkout { max-width: 980px; margin-inline: auto; display: grid; gap: 1.5rem; }
+@media (min-width: 860px) { .checkout { grid-template-columns: 1.1fr 0.9fr; align-items: start; } }
+.summary { background: var(--cherry); border-radius: 24px; padding: 2rem; display: grid; gap: 1.2rem; }
+.summary h2 { font: 500 1.7rem/1.2 var(--serif); }
+.summary dl { display: grid; gap: 0.7rem; }
+.summary dl div { display: flex; justify-content: space-between; gap: 1rem; color: rgba(255, 255, 255, 0.85); }
+.summary dl div:last-child { padding-top: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.25); color: #fff; font-weight: 600; font-size: 1.1rem; }
+.testmode { display: flex; gap: 0.8rem; padding: 1rem 1.2rem; border-radius: 14px; border: 1px dashed var(--warn); background: rgba(242, 193, 78, 0.07); color: #f3e3b3; font-size: 0.9rem; }
+
+/* admin */
+.admin { padding: calc(var(--header-h) + 2rem) 0 5rem; min-height: 100svh; }
+.admin__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.admin__tabs { display: flex; gap: 0.3rem; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.05); overflow-x: auto; max-width: 100%; }
+.admin__tabs button { flex: none; border: 0; background: none; color: var(--ash); padding: 0.55rem 1.1rem; border-radius: 999px; font-weight: 500; font-size: 0.9rem; }
+.admin__tabs button[aria-selected="true"] { background: var(--bone); color: #111; }
+.tiles { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-bottom: 1.5rem; }
+.tile { padding: 1.3rem 1.4rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+.tile b { display: block; font: 500 2.4rem/1.1 var(--serif); font-variant-numeric: tabular-nums; }
+.tile span { color: var(--ash); font-size: 0.875rem; }
+.tile small { display: block; margin-top: 0.3rem; font-size: 0.8rem; color: var(--ok); }
+.tile small.down { color: var(--danger); }
+.admin__cols { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .admin__cols { grid-template-columns: 1.4fr 1fr; } }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 160px; margin-top: 1rem; }
+.bars div { flex: 1; background: var(--cherry); border-radius: 5px 5px 0 0; min-height: 3px; position: relative; transition: background-color 0.2s var(--ease); }
+.bars div:hover { background: var(--ember); }
+.bars div span { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 0.72rem; color: var(--ash); padding-bottom: 3px; }
+.bars-x { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--ash-dim); margin-top: 0.4rem; }
+.funnel { display: grid; gap: 0.7rem; margin-top: 1rem; }
+.funnel div { display: grid; gap: 0.25rem; font-size: 0.9rem; }
+.funnel .bar { height: 8px; background: var(--line); border-radius: 8px; overflow: hidden; }
+.funnel .bar i { display: block; height: 100%; background: var(--ember); border-radius: 8px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1rem; }
+.toolbar .input, .toolbar .select { width: auto; min-height: 42px; }
+.toolbar .input { min-width: 240px; }
+.cell-msg { max-width: 420px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.editor { display: grid; gap: 0.8rem; padding: 1.2rem; border: 1px solid var(--line); border-radius: 16px; margin-bottom: 1rem; background: rgba(255, 255, 255, 0.02); }
+.editor .row .input { flex: 1; min-width: 160px; }
+.pager { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; color: var(--ash); font-size: 0.9rem; }
+
+/* ---- welcome / sign-in gate ---- */
+.welcome__grid { min-height: calc(100svh - var(--header-h)); display: grid; place-items: center; padding: 4rem 0; }
+.welcome__copy { max-width: 34rem; text-align: center; }
+.welcome__copy .eyebrow { justify-content: center; }
+.welcome__copy .eyebrow .icon { color: var(--ember); }
+.welcome__copy h1 { font: 500 clamp(2.2rem, 5vw, 3.4rem)/1.1 var(--serif); letter-spacing: -0.02em; margin-top: 1rem; }
+.welcome__copy .lead { margin-top: 1rem; }
+.welcome__actions { justify-content: center; margin-top: 2rem; }
+.welcome__copy .form-note { margin-top: 1.5rem; }
+
+/* UPI QR checkout */
+.upi { display: grid; gap: 1rem; }
+.upi__qr { justify-self: center; background: #fff; border-radius: 18px; padding: 12px; line-height: 0; }
+.upi__qr img { width: 220px; height: 220px; display: block; }
+.upi__hint { text-align: center; }
+.upi__id { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem; font-size: 0.92rem; }
+.upi__or { display: flex; align-items: center; gap: 0.8rem; color: var(--muted, #8a8a8a); font-size: 0.85rem; }
+.upi__or::before, .upi__or::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.15); }
+.review { max-width: 520px; padding-block: 2rem; }

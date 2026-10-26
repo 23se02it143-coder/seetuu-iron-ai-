@@ -1,0 +1,11 @@
+{%- extends "base.html" -%}
+{% block title %}Page not found | {{ s.app_name }}{% endblock %}
+{% block main %}
+<div class="notfound">
+  <h1>404</h1>
+  <p class="lead center">That page doesn't exist, or it moved.</p>
+  <div><a class="btn btn--primary" href="/">Back to the home page</a></div>
+</div>
+{% endblock %}
+{% block footer %}{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/plain.js?v={{ version }}"></script>{% endblock %}

@@ -1,0 +1,102 @@
+/* Phone-only layout (<= 640px): the same design, far less scrolling.
+   Loaded with media="(max-width: 640px)" so laptops and iPads never apply any of it.
+   Long grids become swipe rows, spacing is tighter, secondary copy is trimmed. */
+
+/* ---- rhythm ------------------------------------------------------------ */
+.section { padding-block: 2.6rem; }
+.section__head { margin-bottom: 1.4rem; }
+.section__head[data-ghost]::before { display: none; }
+.h2 { font-size: clamp(1.6rem, 7.4vw, 2rem); line-height: 1.12; }
+.lead { font-size: 0.98rem; line-height: 1.5; }
+.eyebrow { margin-bottom: 0.6rem; }
+.footer { padding-top: 2.4rem; }
+
+/* ---- hero: fits one screen ---------------------------------------------- */
+.hero { min-height: 0; padding-block: 5.2rem 2.2rem; }
+.hero__kicker { margin-bottom: 0.9rem; font-size: 0.92rem; }
+.hero__lead { margin: 1.1rem auto 1.4rem; font-size: 0.98rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.hero__status { display: none; }
+
+/* ---- reusable swipe row ------------------------------------------------- */
+.facts--bento, .steps, .plans, .programs__feature, .library__grid {
+  display: flex; flex-wrap: nowrap; gap: 0.85rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  margin-inline: -1.25rem; padding-inline: 1.25rem; padding-bottom: 0.4rem; scroll-padding-inline: 1.25rem;
+}
+.facts--bento::-webkit-scrollbar, .steps::-webkit-scrollbar, .plans::-webkit-scrollbar,
+.programs__feature::-webkit-scrollbar, .library__grid::-webkit-scrollbar { display: none; }
+.facts--bento > *, .steps > *, .plans > *, .programs__feature > *, .library__grid > * {
+  flex: 0 0 82%; max-width: 82%; scroll-snap-align: start; min-width: 0;
+}
+.steps { margin-bottom: 1.6rem; }
+.step { min-height: 0; padding: 1.2rem; gap: 0.9rem; }
+.step h3 { font-size: 1.3rem; }
+.step__num { font-size: 2.4rem; }
+
+/* ---- why / mission ------------------------------------------------------ */
+.mission__grid { gap: 1.4rem; }
+.mission__art { display: none; }
+.mission__statement { font-size: clamp(1.75rem, 8vw, 2.2rem); }
+.facts--bento > div { border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem; align-content: start; }
+.facts--bento > div:last-child { border-bottom: 1px solid var(--line); }
+.facts--bento dd { padding-left: 0; font-size: 0.9rem; }
+
+/* ---- proof strip: one compact row of 2x2 -------------------------------- */
+.proof { padding-block: 1.4rem; }
+.proof__grid > div { padding: 0.8rem 0.4rem; }
+.proof__grid b { font-size: 1.7rem; }
+.proof__grid span { font-size: 0.8rem; line-height: 1.35; }
+
+/* ---- safety / assistant ------------------------------------------------- */
+.assistant { gap: 1.4rem; }
+.assistant__points { display: none; }
+.assistant__title { font-size: 1.35rem; }
+.chat__log { height: 230px; }
+
+/* ---- coach / form lab --------------------------------------------------- */
+.coach__layout { gap: 1.2rem; }
+.lab__grid { gap: 1.6rem; }
+.lab__controls { margin-top: 1.2rem; gap: 1rem; }
+.lab__stats { margin-top: 1.2rem; }
+.lab__note { display: none; }
+.lab__stage svg { max-height: 300px; }
+
+/* ---- exercise library: swipe cards, tap a move to see its cue ----------- */
+.library__grid > .libcard, .library__grid > .skeleton { flex-basis: 86%; max-width: 86%; align-self: flex-start; }
+.libcard { padding: 1.15rem; }
+.libcard__blurb { font-size: 0.88rem; margin-bottom: 0.4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.libcard__list li { padding-block: 0.6rem; cursor: pointer; }
+.libcard__cue { display: none; margin-top: 0.4rem; }
+.libcard__list li.is-open .libcard__cue { display: block; }
+.libcard__row span::after { content: "  +"; color: var(--ember); font-weight: 600; white-space: pre; }
+.libcard__list li.is-open .libcard__row span::after { content: "  \2212"; }
+
+/* ---- assessment / diet -------------------------------------------------- */
+.diet__grid { gap: 1.4rem; }
+.diet__form { position: static; gap: 0.8rem; padding: 1.1rem; }
+.diet__empty, .diet__result { min-height: 0; padding: 1.4rem; }
+
+/* ---- programs: swipe row + compact list --------------------------------- */
+.programs__feature > .pcard, .programs__feature > .skeleton { flex-basis: 80%; max-width: 80%; }
+.programs__feature > :nth-child(2) { margin-top: 0; }
+.prow-list { margin-top: 0.9rem; }
+
+/* ---- ticker ------------------------------------------------------------- */
+.ticker { padding-block: 1.6rem; }
+
+/* ---- pricing: swipe row, shorter cards ---------------------------------- */
+.plans > .plan, .plans > .skeleton { flex-basis: 84%; max-width: 84%; }
+.plan__features li:nth-child(n + 6) { display: none; }
+.pricing__foot { font-size: 0.82rem; }
+
+/* ---- stories / faq / waitlist / contact / footer ------------------------ */
+.stories__head.section { padding-block: 2.4rem 0.8rem; }
+.faq summary { padding-block: 0.95rem; font-size: 0.98rem; }
+.cta .h2 br { display: none; }
+.contact__grid { gap: 1.6rem; }
+.contact__topics { display: none; }
+.contact__form { padding: 1.2rem; gap: 0.85rem; }
+.footer__grid { gap: 1.6rem; grid-template-columns: 1fr 1fr; }
+.footer__brand { grid-column: 1 / -1; }
+.footer__mark { margin-top: 2rem; }
+.footer li { margin-bottom: 0.4rem; }

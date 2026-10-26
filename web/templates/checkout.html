@@ -1,0 +1,14 @@
+{%- extends "base.html" -%}
+{%- from "_macros.html" import icon -%}
+{% block header_class %}header--solid{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/css/app.css?v={{ version }}">{% endblock %}
+{% block main %}
+<div class="app">
+  <div class="container">
+    <div class="app__head"><h1>Confirm your plan</h1><p>Review the details, then confirm.</p></div>
+    <div class="checkout" id="checkout-root" aria-live="polite"><div class="skeleton"></div></div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/checkout.js?v={{ version }}"></script>{% endblock %}

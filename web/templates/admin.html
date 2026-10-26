@@ -1,0 +1,16 @@
+{%- extends "base.html" -%}
+{% block header_class %}header--solid{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/css/app.css?v={{ version }}">{% endblock %}
+{% block main %}
+<div class="admin">
+  <div class="container">
+    <div class="admin__bar">
+      <h1 class="h3">Admin</h1>
+      <div class="admin__tabs" role="tablist" aria-label="Admin sections" id="admin-tabs"></div>
+    </div>
+    <div id="admin-root" aria-live="polite"><div class="skeleton"></div></div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/admin.js?v={{ version }}"></script>{% endblock %}

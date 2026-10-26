@@ -1,0 +1,21 @@
+{%- extends "base.html" -%}
+{%- from "_macros.html" import icon -%}
+{% block header_class %}header--solid{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/css/app.css?v={{ version }}">{% endblock %}
+{% block main %}
+<div class="app welcome">
+  <div class="container welcome__grid">
+    <div class="welcome__copy">
+      <p class="eyebrow"><span>{{ icon('lock-key') }}</span>Members only</p>
+      <h1>Sign in to {{ s.app_name }}.</h1>
+      <p class="lead">This site is invite-only right now. Sign in to your account, or create one, to see your training, diet plan and the camera form coach.</p>
+      <div class="row row--center welcome__actions">
+        <button type="button" class="btn btn--primary" data-open-auth="login">{{ icon('user-circle') }}Sign in</button>
+        <button type="button" class="btn btn--ghost" data-open-auth="register">Create an account</button>
+      </div>
+      <p class="form-note">By continuing you agree to the <a class="link" href="/terms">Terms</a> and <a class="link" href="/privacy">Privacy policy</a>.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/welcome.js?v={{ version }}"></script>{% endblock %}

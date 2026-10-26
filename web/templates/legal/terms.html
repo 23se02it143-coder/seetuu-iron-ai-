@@ -1,0 +1,40 @@
+{%- extends "base.html" -%}
+{% block header_class %}header--solid{% endblock %}
+{% block main %}
+<article class="container--narrow prose">
+  <h1>Terms of service</h1>
+  <p class="updated">Last updated {{ year }}</p>
+  {% if not is_production %}<p class="draft-note">Draft template. Have a lawyer review and adapt these terms to your business and jurisdiction before launch. This notice is hidden when ENVIRONMENT=production.</p>{% endif %}
+
+  <h2>1. About these terms</h2>
+  <p>These terms govern your use of {{ s.app_name }}, provided by {{ s.company_name }} ("we", "us"). By creating an account or using the service you agree to them. If you do not agree, please do not use the service.</p>
+
+  <h2>2. Not medical advice</h2>
+  <p>{{ s.app_name }} offers general training and recovery guidance. It is not a medical service and does not diagnose, treat or prevent any condition or injury. Always consult a qualified doctor or physiotherapist before starting or changing an exercise programme, and stop immediately if you feel pain, dizziness, numbness or any symptom that worries you. In an emergency, contact your local emergency services.</p>
+  <p>You train at your own risk. To the extent the law allows, we are not liable for injuries or losses arising from following guidance from the service.</p>
+
+  <h2>3. Your account</h2>
+  <ul>
+    <li>You must provide accurate information and keep your password confidential.</li>
+    <li>You are responsible for activity under your account. Tell us promptly if you suspect misuse.</li>
+    <li>You can delete your account at any time from the account page.</li>
+  </ul>
+
+  <h2>4. Plans, billing and cancellation</h2>
+  <p>Paid plans renew automatically each month or year until cancelled. Prices are shown before you confirm. You can cancel at any time from your account page; you keep access until the end of the paid period. Unless the law requires otherwise, payments already made are not refunded for partial periods.</p>
+  {% if s.payments_provider == 'mock' %}<p>The service is currently in test mode. No real payment is taken.</p>{% endif %}
+
+  <h2>5. Acceptable use</h2>
+  <p>Do not misuse the service: no attempts to disrupt it, bypass rate limits or security controls, scrape it at scale, or use it to harm others. We may suspend accounts that break these rules.</p>
+
+  <h2>6. Waitlist and communications</h2>
+  <p>If you join the waitlist we will email you about launch access and product updates. Every email includes an unsubscribe link. Service messages, such as receipts and password resets, are sent regardless.</p>
+
+  <h2>7. Changes and availability</h2>
+  <p>We may update the service or these terms. If a change is material we will tell you in advance. The service is provided "as is" and may occasionally be unavailable.</p>
+
+  <h2>8. Contact</h2>
+  <p>Questions about these terms: {% if s.support_email %}<a href="mailto:{{ s.support_email }}">{{ s.support_email }}</a>{% else %}use the <a href="/#contact">contact form</a>{% endif %}.</p>
+</article>
+{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/plain.js?v={{ version }}"></script>{% endblock %}

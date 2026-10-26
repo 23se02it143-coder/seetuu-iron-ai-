@@ -1,0 +1,28 @@
+{%- extends "base.html" -%}
+{%- from "_macros.html" import icon -%}
+{% block header_class %}header--solid{% endblock %}
+{% block head %}<link rel="stylesheet" href="/static/css/app.css?v={{ version }}">{% endblock %}
+{% block main %}
+<div class="app">
+  <div class="container">
+    <div class="app__head"><h1>Your account</h1><p id="account-sub">Manage your plan, security and data.</p></div>
+    <div class="app__grid" id="account-root" aria-live="polite">
+      <div class="skeleton"></div>
+    </div>
+  </div>
+</div>
+
+<dialog class="dialog" id="delete-dialog" aria-labelledby="delete-title">
+  <div class="dialog__body">
+    <button type="button" class="dialog__close" data-close aria-label="Close">{{ icon('x') }}</button>
+    <h2 id="delete-title">Delete your account?</h2>
+    <p class="muted">This permanently removes your account, saved assessments and waitlist entry. Any paid plan is cancelled immediately. Invoices are kept, without your name, for bookkeeping. This cannot be undone.</p>
+    <form id="delete-form" novalidate>
+      <div class="field"><label for="delete-password">Confirm with your password</label><input class="input" id="delete-password" name="password" type="password" autocomplete="current-password" required><span class="field-error" data-error-for="password"></span></div>
+      <div class="form-error" data-form-error hidden></div>
+      <div class="row"><button class="btn btn--danger" type="submit">Delete my account</button><button class="btn btn--ghost" type="button" data-close>Keep my account</button></div>
+    </form>
+  </div>
+</dialog>
+{% endblock %}
+{% block scripts %}<script type="module" src="/static/js/pages/account.js?v={{ version }}"></script>{% endblock %}
