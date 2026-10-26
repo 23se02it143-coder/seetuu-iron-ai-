@@ -1,0 +1,22 @@
+IRON-AI: how to open it (Windows)
+
+1. Right-click the zip, Extract All, then open the extracted "iron-ai" folder.
+2. Double-click  run.bat
+   - First run: it installs everything (1 to 2 minutes, needs internet).
+   - Your browser opens at http://localhost:8000 by itself.
+   - The black window prints the ADMIN email and password. Copy them.
+3. Keep the black window open while you use the site. Closing it stops the site.
+   Press Ctrl+C in that window to stop it on purpose.
+
+Admin panel: http://localhost:8000/admin
+
+If the window shows an error, copy the last lines and send them to me.
+If Python is missing, run.bat tells you how to install it (tick "Add python.exe to PATH").
+The camera coach only works on http://localhost:8000 (not a LAN address) or on an HTTPS site.
+
+Things to try
+- "Try the form coach" > "Watch a demo": a simulated athlete shows the ghost coach and corrections. No camera needed.
+- "Start camera": live coaching. Stand side-on, whole body in frame, stand still for 2 seconds.
+- Build a diet plan, ask the chat "I weigh 72 kg and want to bulk", open a program to see its weekly schedule.
+- On this local install every lift and voice cue is unlocked (preview mode). The Free / Pro limits apply
+  when ENVIRONMENT=production.
